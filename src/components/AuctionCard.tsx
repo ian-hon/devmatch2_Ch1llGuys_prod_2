@@ -79,7 +79,7 @@ const AuctionCard = ({ auction }: { auction: any }) => {
 
             {/* Image / Emoji - Fixed aspect ratio */}
             <div className="aspect-square bg-gradient-to-br from-orange-400 to-red-600 flex auctions-center justify-center text-6xl rounded-lg mb-4">
-                <img src={nft.mediaURL} className="w-full h-full object-cover" />
+                <img src={nft.mediaURL} className="w-full h-64 object-cover" />
             </div>
             {/* Content Section - Grows to fill remaining space */}
             <div className="flex-1 flex flex-col justify-between">
