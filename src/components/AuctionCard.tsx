@@ -52,49 +52,26 @@ const AuctionCard = ({ auction }: { auction: any }) => {
     const borderColor = rarityBorderColors[nft.rarity.variant as keyof typeof rarityBorderColors] || "border-white";
     const textColor = rarityTextColors[nft.rarity.variant as keyof typeof rarityTextColors] || "text-white";
 
-    function timeToText(target: any) {
-        target /= 1000;
+    function timeToText(sec: any) {
+        sec /= 1000;
+        let now = Math.floor(Date.now() / 1000);
+        sec -= now;
+        sec = Math.floor(sec);
 
-        var result = '';
-        var length = Math.ceil(target - (new Date().getTime() / 1000));
+        let days = Math.floor(sec / 86400);
+        sec %= 86400;
+        let hours = Math.floor(sec / 3600);
+        sec %= 3600;
+        let minutes = Math.floor(sec / 60);
+        let seconds = sec % 60;
 
-        if (length <= 0) {
-            return 'Ended';
-        }
+        let parts = [];
+        if (days) parts.push(`${days}d`);
+        if (hours) parts.push(`${hours}h`);
+        if (minutes) parts.push(`${minutes}m`);
+        if (seconds || parts.length === 0) parts.push(`${seconds}s`);
 
-        let d = Math.ceil(length / 86400);
-        let h = Math.ceil((length % 86400) / 3600);
-        let m = Math.ceil((length % 3600) / 60);
-        let s = length % 60;
-
-        if (s >= 60) {
-            s = 0;
-            m += 1;
-        }
-
-        if (m >= 60) {
-            m = 0;
-            h += 1;
-        }
-
-        if (h >= 24) {
-            h = 0;
-            d += 1;
-        }
-
-        let t = "";
-        let flag = true;
-        for (const e of [[d, 'd'], [h, 'h'], [m, 'm'], [s, 's']]) {
-            if ((e[0] == 0) && flag) {
-                continue;
-            }
-            flag = false;
-            t += `${e[0]}${e[1]} `;
-        }
-
-        result += `${t}`;
-
-        return result;
+        return parts.join(' ');
     }
 
     return (
